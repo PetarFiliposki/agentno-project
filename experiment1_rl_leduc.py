@@ -194,17 +194,17 @@ def run_experiment(n_episodes=50, use_feedback=True, llm_player="player_0", rend
 if __name__ == "__main__":
     # render=True -> ја прикажува секоја рака/акција во конзолата (текстуален приказ)
     # render=False -> побрзо, без испис (препорачано кога пушташ 50 епизоди - инаку МНОГУ текст)
-    print("=== Услов А: LLM СО in-context feedback ===")
+    print("Услов А: LLM СО in-context feedback")
     results_a = run_experiment(n_episodes=30, use_feedback=True, render=False)
 
-    print("\n=== Услов Б: LLM БЕЗ feedback ===")
+    print("\nУслов Б: LLM БЕЗ feedback")
     results_b = run_experiment(n_episodes=30, use_feedback=False, render=False)
 
     combined = {"with_feedback": results_a, "no_feedback": results_b}
     with open("results_experiment1.json", "w", encoding="utf-8") as f:
         json.dump(combined, f, ensure_ascii=False, indent=2)
 
-    print("\n===== СПОРЕДБА =====")
+    print("\nСПОРЕДБА")
     print(f"Со feedback: просечна награда = {results_a['avg_rewards']['player_0']:.4f}, "
           f"победи = {results_a['wins']['player_0']}/{results_a['n_episodes']}")
     print(f"Без feedback: просечна награда = {results_b['avg_rewards']['player_0']:.4f}, "

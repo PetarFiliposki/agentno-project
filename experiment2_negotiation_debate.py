@@ -10,8 +10,6 @@
 Услов 2 (без дебата, baseline): агентите директно разменуваат понуди,
          без дебатен круг на критика/аргументација.
 
-Мерки: стапка на постигнат договор, просечна корист (utility) по агент,
-       Nash product (мерка за фер-распределба), просечен број рунди.
 """
 
 import json
@@ -197,17 +195,17 @@ def run_experiment(n_trials=30, use_debate=True, verbose=False):
 
 
 if __name__ == "__main__":
-    print("=== Услов А: СО дебатен круг пред секоја понуда ===")
+    print("Услов А: СО дебатен круг пред секоја понуда")
     results_debate = run_experiment(n_trials=2, use_debate=True, verbose=True)
 
-    print("\n=== Услов Б: БЕЗ дебатен круг (директно преговарање) ===")
+    print("\nУслов Б: БЕЗ дебатен круг (директно преговарање)")
     results_no_debate = run_experiment(n_trials=2, use_debate=False, verbose=True)
 
     combined = {"with_debate": results_debate, "no_debate": results_no_debate}
     with open("results_experiment2.json", "w", encoding="utf-8") as f:
         json.dump(combined, f, ensure_ascii=False, indent=2)
 
-    print("\n===== СПОРЕДБА =====")
+    print("\nСПОРЕДБА")
     print(f"Со дебата: agreement_rate={results_debate['agreement_rate']:.2f}, "
           f"avg_nash={results_debate['avg_nash_product']:.3f}, avg_rounds={results_debate['avg_rounds']:.2f}")
     print(f"Без дебата: agreement_rate={results_no_debate['agreement_rate']:.2f}, "
