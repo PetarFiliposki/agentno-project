@@ -1,0 +1,30 @@
+{
+  "with_feedback": {
+    "condition": "with_feedback",
+    "avg_rewards": {
+      "player_0": -0.8,
+      "player_1": 0.8
+    },
+    "wins": {
+      "player_0": 0,
+      "player_1": 5
+    },
+    "ties": 0,
+    "n_episodes": 5,
+    "win_rate_curve": []
+  },
+  "no_feedback": {
+    "condition": "no_feedback",
+    "avg_rewards": {
+      "player_0": -1.1,
+      "player_1": 1.1
+    },
+    "wins": {
+      "player_0": 0,
+      "player_1": 5
+    },
+    "ties": 0,
+    "n_episodes": 5,
+    "win_rate_curve": []
+  }
+}
