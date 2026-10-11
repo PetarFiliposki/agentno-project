@@ -1,67 +1,61 @@
 {
   "with_debate": {
-    "condition": "with_debate",
-    "n_trials": 2,
-    "agreement_rate": 0.5,
-    "avg_rounds": 4.0,
-    "avg_utility_a": 0.17950000000000002,
-    "avg_utility_b": 0.307,
-    "avg_nash_product": 0.110213,
-    "raw_results": [
+    "agreement_rate": 0.0,
+    "avg_rounds": 10.0,
+    "avg_utility_a": 0.0,
+    "avg_utility_b": 0.0,
+    "avg_nash": 0.0,
+    "results": [
       {
-        "agreement": true,
-        "rounds": 3,
-        "utility_a": 0.35900000000000004,
-        "utility_b": 0.614,
-        "nash_product": 0.220426,
-        "allocation_a": {
-          "буџет": 50.0,
-          "тим": 10.0,
-          "временска рамка": 40.0
-        },
-        "allocation_b": {
-          "буџет": 50.0,
-          "тим": 90.0,
-          "временска рамка": 60.0
-        }
+        "agreement": false,
+        "rounds": 10,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
       },
       {
         "agreement": false,
-        "rounds": 5,
-        "utility_a": 0.0,
-        "utility_b": 0.0,
-        "nash_product": 0.0,
-        "allocation_a": null,
-        "allocation_b": null
+        "rounds": 10,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
+      },
+      {
+        "agreement": false,
+        "rounds": 10,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
       }
     ]
   },
   "no_debate": {
-    "condition": "no_debate",
-    "n_trials": 2,
     "agreement_rate": 0.0,
-    "avg_rounds": 5.0,
+    "avg_rounds": 10.0,
     "avg_utility_a": 0.0,
     "avg_utility_b": 0.0,
-    "avg_nash_product": 0.0,
-    "raw_results": [
+    "avg_nash": 0.0,
+    "results": [
       {
         "agreement": false,
-        "rounds": 5,
-        "utility_a": 0.0,
-        "utility_b": 0.0,
-        "nash_product": 0.0,
-        "allocation_a": null,
-        "allocation_b": null
+        "rounds": 10,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
       },
       {
         "agreement": false,
-        "rounds": 5,
-        "utility_a": 0.0,
-        "utility_b": 0.0,
-        "nash_product": 0.0,
-        "allocation_a": null,
-        "allocation_b": null
+        "rounds": 10,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
+      },
+      {
+        "agreement": false,
+        "rounds": 10,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
       }
     ]
   }

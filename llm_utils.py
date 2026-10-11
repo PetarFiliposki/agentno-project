@@ -8,7 +8,7 @@ from openai import OpenAI
 
 client = OpenAI(
     api_key="ollama",
-    base_url="http://localhost:11434/v1",
+    base_url="http://127.0.0.1:11434/v1",
 )
 
 MODEL = "llama3.1:8b"

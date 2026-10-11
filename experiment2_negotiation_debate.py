@@ -1,17 +1,3 @@
-"""
-ЕКСПЕРИМЕНТ 2 - Координација, преговори и дебата кај повеќеагентски ЛЛМ-системи
-================================================================================
-Задача: "Поделба на проектни ресурси" - два ЛЛМ-агенти (Агент А и Агент Б)
-преговараат како да поделат 3 ресурси (буџет, тим, временска рамка), секој
-со приватни (скриени за другиот) тежини на важност кои сумираат до 1.0.
-
-Услов 1 (со дебата): пред секоја понуда, агентите разменуваат кратка критика/
-         аргумент за претходната понуда (дебатен круг), па потоа ревидираат.
-Услов 2 (без дебата, baseline): агентите директно разменуваат понуди,
-         без дебатен круг на критика/аргументација.
-
-"""
-
 import json
 import re
 import random
@@ -19,194 +5,157 @@ from llm_utils import call_llm
 
 ISSUES = ["буџет", "тим", "временска рамка"]
 MAX_ROUNDS = 5
-RESERVATION_UTILITY = 0.0
-
 
 def random_weights():
-    """Генерира случаен вектор на приватни тежини кои сумираат до 1.0."""
-    raw = [random.random() for _ in ISSUES]
-    total = sum(raw)
-    return {issue: round(r / total, 2) for issue, r in zip(ISSUES, raw)}
+    r = [random.random() for _ in ISSUES]
+    s = sum(r)
+    return {i: round(x / s, 2) for i, x in zip(ISSUES, r)}
 
-
-def utility(allocation_for_agent, weights):
-    """Kолку сум задоволен/среќен -> % (0-100) добиени од агентот."""
-    return sum(weights[issue] * allocation_for_agent[issue] / 100 for issue in ISSUES)
-
+def utility(a, w):
+    return sum(w[i] * a[i] / 100 for i in ISSUES)
 
 def parse_offer(text):
-    """Очекува понуда во формат JSON: {"буџет": 60, "тим": 40, "временска рамка": 70}"""
-    match = re.search(r"\{[^{}]*\}", text)
-    if not match:
+    m = re.search(r"\{[^{}]*\}", text)
+    if not m:
         return None
     try:
-        data = json.loads(match.group(0))
-        if all(issue in data for issue in ISSUES):
-            return {issue: max(0, min(100, float(data[issue]))) for issue in ISSUES}
-    except (json.JSONDecodeError, ValueError, TypeError):
-        return None
+        d = json.loads(m.group())
+        if all(i in d for i in ISSUES):
+            return {i: max(0, min(100, float(d[i]))) for i in ISSUES}
+    except:
+        pass
     return None
 
+def accepted(text):
+    return "прифаќам" in text.lower() or "agree" in text.lower()
 
-def check_agreement(text):
-    return "се согласувам" in text.lower() or "прифаќам" in text.lower() or "agree" in text.lower()
+def offer_prompt(agent, weights, received, context, rnd):
+    previous = f"Понуда за тебе: {received}" if received else "Нема претходна понуда."
+    ctx = f"\n{context}" if context else ""
 
+    return f"""
+Ти си {agent}. Преговараш со друг LLM агент за {ISSUES}.
+Твои приватни тежини: {weights}
+{previous}{ctx}
+Рунда {rnd}/{MAX_ROUNDS}.
 
-def build_offer_prompt(agent_name, weights, last_offer_from_other, debate_note, round_num):
-    other_offer_str = (
-        f"Претходна понуда од другиот агент (% за ТЕБЕ по секој ресурс): {last_offer_from_other}"
-        if last_offer_from_other else "Ова е првата рунда, нема претходна понуда."
-    )
-    debate_str = f"\nТвојата белешка од дебатата пред оваа понуда: {debate_note}" if debate_note else ""
+Ако ја прифаќаш понудата напиши само "прифаќам".
+Инаку даде нова понуда во JSON. Процентите се за ТЕБЕ.
+Пример: {{"буџет":60,"тим":40,"временска рамка":70}}
+Одговори само со "прифаќам" или JSON.
+"""
 
-    return f"""Ти си {agent_name} во преговори за поделба на 3 проектни ресурси меѓу
-тебе и друг агент: {ISSUES}. За секој ресурс се одредува процент (0-100) кој
-припаѓа НА ТЕБЕ (остатокот му припаѓа на другиот агент).
+def argument_prompt(agent, weights, offer):
+    return f"""
+Ти си {agent}. Другиот агент ти понуди: {offer}.
+Твои тежини: {weights}.
+Во 1-2 реченици, аргументирај конкретно зошто сметаш дека оваа понуда
+е неповолна за тебе и кој ресурс бараш да се промени и зошто (повикај
+се на твоите приватни тежини). Ова е твој ОТВОРЕН АРГУМЕНТ кон другиот агент.
+"""
 
-Твои ПРИВАТНИ тежини на важност (не ги знае другиот агент): {weights}
-Твојата вкупна корист = збир(тежина_i × твој_процент_i / 100), максимум 1.0.
+def rebuttal_prompt(other_agent, other_weights, opponent_argument):
+    return f"""
+Ти си {other_agent}. Другиот агент ти го изнесе следниот аргумент
+зошто бара поголем удел: "{opponent_argument}"
 
-{other_offer_str}{debate_str}
+Твои приватни тежини: {other_weights}.
+Одговори КОНКРЕТНО на тој аргумент (прифати го делумно, отфрли го,
+или понуди компромис) во 1-2 реченици. Ова е твој КОНТРА-АРГУМЕНТ
+(rebuttal), не нова понуда.
+"""
 
-Рунда {round_num}/{MAX_ROUNDS}.
-
-Ако сакаш да ја ПРИФАТИШ претходната понуда, одговори со зборот "прифаќам".
-Инаку, дај НОВА понуда како JSON со процент за ТЕБЕ по ресурс, пр:
-{{"буџет": 60, "тим": 40, "временска рамка": 70}}
-Одговори САМО со зборот "прифаќам" ИЛИ со JSON, без друго објаснување."""
-
-
-def build_debate_prompt(agent_name, weights, opponent_offer):
-    return f"""Ти си {agent_name}. Другиот агент во преговорите ти предложи да добиеш
-следниве проценти по ресурс: {opponent_offer} (ресурси: {ISSUES}).
-Твоите приватни тежини на важност се: {weights}.
-
-Во 1-2 реченици, критикувај ја понудата од своја перспектива и наведи
-кој ресурс сакаш да добиеш поголем удел и зошто (ова ќе го искористиш
-за да ја обликуваш следната своја понуда). Кратко, без JSON."""
-
-
-def run_negotiation(use_debate, verbose=False):
-    weights_a = random_weights()
-    weights_b = random_weights()
-
+def negotiate(debate=True, verbose=False):
+    weights = {"Агент А": random_weights(), "Агент Б": random_weights()}
     agents = ["Агент А", "Агент Б"]
-    weights = {"Агент А": weights_a, "Агент Б": weights_b}
+    received = None
 
-    last_offer = None
-    offering_agent_idx = 0
+    for rnd in range(1, MAX_ROUNDS + 1):
+        agent = agents[(rnd - 1) % 2]
+        other = agents[rnd % 2]
 
-    for round_num in range(1, MAX_ROUNDS + 1):
-        current_agent = agents[offering_agent_idx % 2]
-        other_agent = agents[(offering_agent_idx + 1) % 2]
+        context = None
 
-        debate_note = None
-        if use_debate and last_offer is not None:
-            debate_prompt = build_debate_prompt(current_agent, weights[current_agent], last_offer)
-            debate_note = call_llm(
-                system_prompt="Ти си стратешки преговарач кој гради аргументи пред да понуди.",
-                user_prompt=debate_prompt,
-                max_tokens=150,
+        if debate and received:
+            argument = call_llm(
+                "Ти си преговарач кој изнесува аргумент.",
+                argument_prompt(agent, weights[agent], received),
+                120
             )
-            if verbose:
-                print(f"  [дебата - {current_agent}]: {debate_note}")
+            rebuttal = call_llm(
+                "Ти си преговарач кој одговара на туѓ аргумент.",
+                rebuttal_prompt(other, weights[other], argument),
+                120
+            )
+            context = f"Твој аргумент: {argument}\nОдговор (rebuttal) од {other}: {rebuttal}"
 
-        offer_prompt = build_offer_prompt(current_agent, weights[current_agent], last_offer, debate_note, round_num)
+            if verbose:
+                print(f"  [аргумент - {agent}]: {argument}")
+                print(f"  [rebuttal - {other}]: {rebuttal}")
+
         response = call_llm(
-            system_prompt="Ти си стратешки преговарач за поделба на ресурси.",
-            user_prompt=offer_prompt,
-            max_tokens=100,
+            "Ти си рационален преговарач.",
+            offer_prompt(agent, weights[agent], received, context, rnd),
+            150
         )
 
         if verbose:
-            print(f"  [понуда - {current_agent}]: {response}")
+            print(f"  [понуда - {agent}]: {response}")
 
-        if check_agreement(response) and last_offer is not None:
-            # тековниот агент ја прифаќа понудата (last_offer е % за него од претходна рунда)
-            allocation_current = last_offer
-            allocation_other = {issue: 100 - allocation_current[issue] for issue in ISSUES}
-
-            if current_agent == "Агент А":
-                alloc_a, alloc_b = allocation_current, allocation_other
+        if accepted(response) and received:
+            if agent == "Агент А":
+                a = received
+                b = {i: 100 - received[i] for i in ISSUES}
             else:
-                alloc_b, alloc_a = allocation_current, allocation_other
+                b = received
+                a = {i: 100 - received[i] for i in ISSUES}
 
-            u_a = utility(alloc_a, weights_a)
-            u_b = utility(alloc_b, weights_b)
+            ua, ub = utility(a, weights["Агент А"]), utility(b, weights["Агент Б"])
 
             return {
                 "agreement": True,
-                "rounds": round_num,
-                "utility_a": u_a,
-                "utility_b": u_b,
-                "nash_product": u_a * u_b,
-                "allocation_a": alloc_a, # финалната, стварна поделба на ресурсите откако е постигнат договор
-                "allocation_b": alloc_b,
+                "rounds": rnd,
+                "utility_a": ua,
+                "utility_b": ub,
+                "nash_product": ua * ub
             }
 
-        parsed = parse_offer(response)
-        if parsed is None:
-            # LLM не одговори во валиден формат - третираме како неуспешна рунда, продолжуваме
-            parsed = {issue: 50 for issue in ISSUES}
+        offer = parse_offer(response) or {i: 50 for i in ISSUES}
+        received = {i: 100 - offer[i] for i in ISSUES}
 
-        last_offer = parsed  # % за СЛЕДНИОТ агент (примателот) - според дефиницијата подолу
-        last_offer = {issue: 100 - parsed[issue] for issue in ISSUES}
-
-        offering_agent_idx += 1
-
-    # нема договор по MAX_ROUNDS
     return {
         "agreement": False,
         "rounds": MAX_ROUNDS,
-        "utility_a": RESERVATION_UTILITY,
-        "utility_b": RESERVATION_UTILITY,
-        "nash_product": 0.0,
-        "allocation_a": None,
-        "allocation_b": None,
+        "utility_a": 0,
+        "utility_b": 0,
+        "nash_product": 0
     }
 
-
-def run_experiment(n_trials=30, use_debate=True, verbose=False):
+def experiment(n=30, debate=True, verbose=True):
     results = []
-    for t in range(n_trials):
-        res = run_negotiation(use_debate=use_debate, verbose=verbose)
-        results.append(res)
-        print(f"[{'debate' if use_debate else 'no-debate'}] Обид {t+1}/{n_trials}: "
-              f"agreement={res['agreement']}, rounds={res['rounds']}, "
-              f"U_A={res['utility_a']:.2f}, U_B={res['utility_b']:.2f}")
-
-    agreements = [r for r in results if r["agreement"]]
-    agreement_rate = len(agreements) / n_trials
-    avg_rounds = sum(r["rounds"] for r in results) / n_trials
-    avg_utility_a = sum(r["utility_a"] for r in results) / n_trials
-    avg_utility_b = sum(r["utility_b"] for r in results) / n_trials
-    avg_nash = sum(r["nash_product"] for r in results) / n_trials
-
+    for i in range(n):
+        r = negotiate(debate, verbose=verbose)
+        results.append(r)
+        print(f"[{'debate' if debate else 'no-debate'}] Преговор {i+1}/{n}: "
+              f"agreement={r['agreement']}, rounds={r['rounds']}, "
+              f"U_A={r['utility_a']:.2f}, U_B={r['utility_b']:.2f}")
     return {
-        "condition": "with_debate" if use_debate else "no_debate",
-        "n_trials": n_trials,
-        "agreement_rate": agreement_rate,
-        "avg_rounds": avg_rounds,
-        "avg_utility_a": avg_utility_a,
-        "avg_utility_b": avg_utility_b,
-        "avg_nash_product": avg_nash,
-        "raw_results": results,
+        "agreement_rate": sum(r["agreement"] for r in results) / n,
+        "avg_rounds": sum(r["rounds"] for r in results) / n,
+        "avg_utility_a": sum(r["utility_a"] for r in results) / n,
+        "avg_utility_b": sum(r["utility_b"] for r in results) / n,
+        "avg_nash": sum(r["nash_product"] for r in results) / n,
+        "results": results
     }
-
 
 if __name__ == "__main__":
-    print("Услов А: СО дебатен круг пред секоја понуда")
-    results_debate = run_experiment(n_trials=2, use_debate=True, verbose=True)
+    debate = experiment(25, True,)
+    no_debate = experiment(25, False, )
 
-    print("\nУслов Б: БЕЗ дебатен круг (директно преговарање)")
-    results_no_debate = run_experiment(n_trials=2, use_debate=False, verbose=True)
+    print("Со дебата:", debate)
+    print("Без дебата:", no_debate)
 
-    combined = {"with_debate": results_debate, "no_debate": results_no_debate}
     with open("results_experiment2.json", "w", encoding="utf-8") as f:
-        json.dump(combined, f, ensure_ascii=False, indent=2)
-
-    print("\nСПОРЕДБА")
-    print(f"Со дебата: agreement_rate={results_debate['agreement_rate']:.2f}, "
-          f"avg_nash={results_debate['avg_nash_product']:.3f}, avg_rounds={results_debate['avg_rounds']:.2f}")
-    print(f"Без дебата: agreement_rate={results_no_debate['agreement_rate']:.2f}, "
-          f"avg_nash={results_no_debate['avg_nash_product']:.3f}, avg_rounds={results_no_debate['avg_rounds']:.2f}")
+        json.dump(
+            {"with_debate": debate, "no_debate": no_debate}, f, ensure_ascii=False, indent=2
+        )
