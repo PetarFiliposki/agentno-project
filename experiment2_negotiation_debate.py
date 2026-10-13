@@ -40,7 +40,7 @@ def offer_prompt(agent, weights, received, context, rnd):
 Рунда {rnd}/{MAX_ROUNDS}.
 
 Ако ја прифаќаш понудата напиши само "прифаќам".
-Инаку даде нова понуда во JSON. Процентите се за ТЕБЕ.
+Инаку даде нова понуда во JSON. Процентите се за тебе.
 Пример: {{"буџет":60,"тим":40,"временска рамка":70}}
 Одговори само со "прифаќам" или JSON.
 """
@@ -51,7 +51,7 @@ def argument_prompt(agent, weights, offer):
 Твои тежини: {weights}.
 Во 1-2 реченици, аргументирај конкретно зошто сметаш дека оваа понуда
 е неповолна за тебе и кој ресурс бараш да се промени и зошто (повикај
-се на твоите приватни тежини). Ова е твој ОТВОРЕН АРГУМЕНТ кон другиот агент.
+се на твоите приватни тежини). Ова е твој отворен аргумент кон другиот агент.
 """
 
 def rebuttal_prompt(other_agent, other_weights, opponent_argument):
@@ -60,8 +60,8 @@ def rebuttal_prompt(other_agent, other_weights, opponent_argument):
 зошто бара поголем удел: "{opponent_argument}"
 
 Твои приватни тежини: {other_weights}.
-Одговори КОНКРЕТНО на тој аргумент (прифати го делумно, отфрли го,
-или понуди компромис) во 1-2 реченици. Ова е твој КОНТРА-АРГУМЕНТ
+Одговори конкретно на тој аргумент (прифати го делумно, отфрли го,
+или понуди компромис) во 1-2 реченици. Ова е твој контра-аргумент
 (rebuttal), не нова понуда.
 """
 
@@ -96,8 +96,7 @@ def negotiate(debate=True, verbose=False):
         response = call_llm(
             "Ти си рационален преговарач.",
             offer_prompt(agent, weights[agent], received, context, rnd),
-            150
-        )
+            150 )
 
         if verbose:
             print(f"  [понуда - {agent}]: {response}")
@@ -156,6 +155,4 @@ if __name__ == "__main__":
     print("Без дебата:", no_debate)
 
     with open("results_experiment2.json", "w", encoding="utf-8") as f:
-        json.dump(
-            {"with_debate": debate, "no_debate": no_debate}, f, ensure_ascii=False, indent=2
-        )
+        json.dump({"with_debate": debate, "no_debate": no_debate}, f, ensure_ascii=False, indent=2)

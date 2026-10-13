@@ -150,7 +150,6 @@ def run_episode(histories, feedback):
         else:
             legal_idx, raw_obs = get_state_info(env)
 
-            # Секој играч е LLM
             if feedback[agent]:
                 history_summary = summarize_history(
                     histories[agent]
@@ -289,17 +288,8 @@ if __name__ == "__main__":
         "feedback_vs_feedback": results_b
     }
 
-    with open(
-        "results_experiment1.json",
-        "w",
-        encoding="utf-8"
-    ) as f:
-        json.dump(
-            results,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
+    with open("results_experiment1.json", "w",encoding="utf-8") as f:
+        json.dump(results,f,ensure_ascii=False,indent=2)
 
     print("\n==============================")
     print("РЕЗУЛТАТИ")
