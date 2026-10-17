@@ -1,0 +1,630 @@
+{
+  "with_debate": {
+    "condition": "со_дебата",
+    "n_trials": 30,
+    "agreements": 9,
+    "agreement_rate": 0.3,
+    "valid_deals": 2,
+    "avg_rounds": 5.533333333333333,
+    "avg_price": 328.44444444444446,
+    "avg_seller_share": 0.6498834498834498,
+    "avg_nash": 0.014704737893549084,
+    "format_error_rate": 0.06626506024096386,
+    "raw_results": [
+      {
+        "agreement": true,
+        "rounds": 4,
+        "price": 340.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 4
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 275.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 6,
+        "price": 380.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 4,
+        "price": 262.0,
+        "valid": true,
+        "seller_share": 0.5664335664335665,
+        "nash": 0.24558658125091692,
+        "format_errors": 0,
+        "decisions": 4
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 300.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 4,
+        "price": 420.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 4
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 6,
+        "price": 350.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 4,
+        "price": 330.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 4
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 2,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 6,
+        "price": 299.0,
+        "valid": true,
+        "seller_share": 0.7333333333333333,
+        "nash": 0.19555555555555557,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 2,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      }
+    ]
+  },
+  "without_debate": {
+    "condition": "без_дебата",
+    "n_trials": 30,
+    "agreements": 16,
+    "agreement_rate": 0.5333333333333333,
+    "valid_deals": 5,
+    "avg_rounds": 4.9,
+    "avg_price": 307.0625,
+    "avg_seller_share": 0.7979481838631672,
+    "avg_nash": 0.01982770981418181,
+    "format_error_rate": 0.04081632653061224,
+    "raw_results": [
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 295.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 5,
+        "price": 300.0,
+        "valid": true,
+        "seller_share": 0.7903225806451613,
+        "nash": 0.16571279916753381,
+        "format_errors": 0,
+        "decisions": 5
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 2,
+        "price": 350.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 2
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 240.0,
+        "valid": true,
+        "seller_share": 0.4125874125874126,
+        "nash": 0.24235903956183677,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 350.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 6,
+        "price": 320.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 380.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 295.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": true,
+        "rounds": 5,
+        "price": 300.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 5
+      },
+      {
+        "agreement": true,
+        "rounds": 5,
+        "price": 280.0,
+        "valid": true,
+        "seller_share": 0.8504672897196262,
+        "nash": 0.12717267883657962,
+        "format_errors": 0,
+        "decisions": 5
+      },
+      {
+        "agreement": true,
+        "rounds": 6,
+        "price": 309.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 309.0,
+        "valid": true,
+        "seller_share": 0.9363636363636364,
+        "nash": 0.059586776859504136,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": true,
+        "rounds": 6,
+        "price": 275.0,
+        "valid": true,
+        "seller_share": 1.0,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 320.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 4,
+        "price": 290.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 1,
+        "decisions": 4
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": true,
+        "rounds": 3,
+        "price": 300.0,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 3
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      },
+      {
+        "agreement": false,
+        "rounds": 6,
+        "price": null,
+        "valid": false,
+        "seller_share": null,
+        "nash": 0.0,
+        "format_errors": 0,
+        "decisions": 6
+      }
+    ]
+  }
+}
